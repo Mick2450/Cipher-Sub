@@ -51,9 +51,9 @@ int main(void){
             if(e >= 26){     //if array pointer value is exceeded
                 e = e - 26;    //starts array pointers over again plus difference between total value (>26) and max pointer value (26)    
               }
-             eN = eLibU[e]; //selects encrypted value from upper case array
-             array[i] = eN;
-             freq[i] = -1;
+             eN = eLibU[e]; //selects ascii value from upper case array
+             array[i] = eN; //stores selected ascii value in an array
+             freq[i] = -1;  //Initialise frequency to -1
         }   
 
         /*The following 3 'else if' statements leave common punctuation unmodified*/
@@ -86,39 +86,32 @@ int main(void){
       
      
     }
-       
-    for(i=0; i <= 25; i++)
-    {
+      
+   /*------Determines frequency of character occurrence for statistical analysis------*/   
+    for(i=0; i <= 1024; i++){
         count = 1;
-        for(j=i+1; j <= 25 ; j++)
-        {
-            if(array[i]==array[j])
-            {
+        for(j=i+1; j <= 1024 ; j++){
+            if(array[i]==array[j]){
                 count++;
                 freq[j] = 0;
             }
         }
 
-        if(freq[i] != 0)
-        {
+        if(freq[i] != 0){
             freq[i] = count;
         }
     }
+    
     printf("\nThe frequency of all elements of array : \n");
-    for(i=0; i <= 25; i++)
+    for(i=0; i <= 1024; i++)
     {
         if(freq[i] != 0)
         {
-            printf("%d occurs %d times\n", array[i], freq[i]);
+            printf("%c (%d) occurs %d times\n", array[i], array[i], freq[i]);
         }
     }
-    
+/*----------------------------------------------------------------------------------*/    
 
-
-    
-        
-
-       
 
         
         //fputc(eLibU[c], output); //prints encrypted message to output file
@@ -133,6 +126,6 @@ int main(void){
    
 
     
-    /*---------count frequency of charcter occurence---------*/
+
 
     
