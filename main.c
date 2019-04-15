@@ -7,7 +7,8 @@ int main(void){
     int i = 0, e = 0, count = 0, j = 0;
     int freq[1024];
     int array[1024];
-    int max = 0,  maxLoc;
+    int max = 0, maxLoc;
+    int statisticArray[1024];
       
     /*Open message file and output file*/
     FILE *input, *output;        //File points to input and output
@@ -76,7 +77,7 @@ int main(void){
             asc[i] = 58;  //sets ASCII value to colon
             eN = 58;  //sets ASCII value to colon
         }  
-               
+                       
         else if(c < 65 || (c >= 91 && c <= 96) || c > 122 ){ //excludes any ASCII value that isn't a letter
            
             asc[i] = 32;  //sets ASCII value to space
@@ -103,7 +104,7 @@ int main(void){
         }
     }
     
-    printf("\nThe frequency of all elements of array : \n");
+    printf("\nThe frequency of all elements of array: \n");
     
     for(i=0; i <= 1024; i++){
         if(freq[i] != 0){
@@ -116,23 +117,30 @@ int main(void){
             max = freq[i];
             maxLoc = array[i];
         }
-    }   
+        if()
+    }
+        
+    printf("\n%c occurs the most: %d times\n", maxLoc, max); 
 
-    printf("\n%c occurs the most: %d times\n", maxLoc, max);
     
-    
-    
-            
+//make array that takes pointer as array[i] and value as corresponding freq[i]
+//sort array by descending freq
+//create new array with re-assigned values for A to Z. E.g. Encrypted input X = E for most common etc. 
+     
+
+      
+      
+      
 /*----------------------------------------------------------------------------------*/    
 
 /*--------------Decryption/Encryption Based on Statistical Analysis------------------*/
     
 
         
-   
+  
         
     fclose(input); //closes input file
-    fclose(output);
+    fclose(output); //closes output file
     
     return 0;     
 }
