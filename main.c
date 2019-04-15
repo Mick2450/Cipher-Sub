@@ -7,6 +7,7 @@ int main(void){
     int i = 0, e = 0, count = 0, j = 0;
     int freq[1024];
     int array[1024];
+    int max = 0,  maxLoc;
       
     /*Open message file and output file*/
     FILE *input, *output;        //File points to input and output
@@ -83,7 +84,7 @@ int main(void){
         }   
 
         printf("%c %d encrypted: %d %c\n", asc[i], asc[i], eN, eN);
-      
+        fputc(eN, output); //prints encrypted message to output file
      
     }
       
@@ -103,18 +104,30 @@ int main(void){
     }
     
     printf("\nThe frequency of all elements of array : \n");
-    for(i=0; i <= 1024; i++)
-    {
-        if(freq[i] != 0)
-        {
+    
+    for(i=0; i <= 1024; i++){
+        if(freq[i] != 0){
             printf("%c (%d) occurs %d times\n", array[i], array[i], freq[i]);
         }
     }
+    
+     for(i=0; i <= 1024; i++){
+        if(freq[i] > max){
+            max = freq[i];
+            maxLoc = array[i];
+        }
+    }   
+
+    printf("\n%c occurs the most: %d times\n", maxLoc, max);
+    
+    
+    
+            
 /*----------------------------------------------------------------------------------*/    
 
+/*--------------Decryption/Encryption Based on Statistical Analysis------------------*/
+    
 
-        
-        //fputc(eLibU[c], output); //prints encrypted message to output file
         
    
         
