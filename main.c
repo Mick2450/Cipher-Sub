@@ -1,14 +1,17 @@
 #include <stdio.h>
 
 int main(void){
-    char c, eN; //c is character from message & eN is is the encrypted character
+    char c, eN, eNFinal; //c is character from message & eN is is the encrypted character
     int eLibU[] = {65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90}; //library of encryption values from A to Z
     int asc[1024]; //ascii array
     int i = 0, e = 0, count = 0, j = 0;
-    int freq[1024];
+    int freq[1000];
     int array[1024];
-    int max = 0, maxLoc;
-    int statisticArray[1024];
+    int max = 0, maxLoc, loc;
+    int decrypt[26] = {0}; // array used to store decrypted letters. Can be compared to eLibU. E.g. if eLibU[1] = B and decryptArray[1] = E, B = E
+    int key[26]; //key  
+    int static k;
+    int location[25];
       
     /*Open message file and output file*/
     FILE *input, *output;        //File points to input and output
@@ -49,7 +52,7 @@ int main(void){
             
             asc[i] = c;     //assigns array at array point i with value c
             c = c - 32;     //a = 0
-            e = c -65; //encryption algorithm 
+            e = c - 65; //encryption algorithm 
             if(e >= 26){     //if array pointer value is exceeded
                 e = e - 26;    //starts array pointers over again plus difference between total value (>26) and max pointer value (26)    
               }
@@ -85,7 +88,7 @@ int main(void){
         }   
 
         printf("%c %d encrypted: %d %c\n", asc[i], asc[i], eN, eN);
-        fputc(eN, output); //prints encrypted message to output file
+        
      
     }
       
@@ -103,31 +106,32 @@ int main(void){
             freq[i] = count;
         }
     }
-    
-    printf("\nThe frequency of all elements of array: \n");
-    
-    for(i=0; i <= 1024; i++){
-        if(freq[i] != 0){
-            printf("%c (%d) occurs %d times\n", array[i], array[i], freq[i]);
+    /*------------------------------------------------------------------------*/
+   
+    /*------------------Orders Letter is descending frequency of occurence----------------------------*/
+    for (i=0; i<=1024; ++i){    
+        for (j=i+1; j<=1024; ++j){
+            if (freq[i] < freq[j]){
+                int tmp = freq[i];
+                freq[i] = freq[j];
+                freq[j] = tmp;
+       
+                int tmp2 = array[i];
+                array[i] = array[j];
+                array[j] = tmp2;
+            }
+        }
+    }
+
+    printf ("\nDescending order of letter frequency"); 
+    for (i=0; i<=25; i++){
+        if(freq[i] != 0 && array[i] >= 0 && array[i] <= 90){
+            printf ("\n%c occurs %d times", array[i], freq[i]); //array[i] is now ordered in terms of frequency of letter occurence from input text
         }
     }
     
-     for(i=0; i <= 1024; i++){
-        if(freq[i] > max){
-            max = freq[i];
-            maxLoc = array[i];
-        }
-        if()
-    }
-        
-    printf("\n%c occurs the most: %d times\n", maxLoc, max); 
-
-    
-//make array that takes pointer as array[i] and value as corresponding freq[i]
-//sort array by descending freq
-//create new array with re-assigned values for A to Z. E.g. Encrypted input X = E for most common etc. 
-     
-
+    //printf("\n%c\n", array[0]); array[0] is the most commonly occuring letter, can test if array is working here
+ /*------------------------------------------------------------------------*/
       
       
       
