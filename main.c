@@ -8,11 +8,11 @@ int main(void){
     int freq[1000];
     int array[1024];
     int max = 0, maxLoc, loc;
-    int decrypt[26] = {0}; // array used to store decrypted letters. Can be compared to eLibU. E.g. if eLibU[1] = B and decryptArray[1] = E, B = E
+    int decrypted[1024]; // array used to store decrypted message
     int key[26]; //key  
     int k, arr = 0, alph = 0, location;
     int AlphFreq[] = {69, 84, 65, 79, 73, 78, 83, 72, 82, 68, 76, 85, 67, 77, 87, 70, 71, 89, 80, 66, 86, 75, 74, 88, 81, 90}; //array with descending order of charcter frequency in Ennglish alphabet
- 
+    int original[1024];
     
       
     /*Open message file and output file*/
@@ -87,8 +87,10 @@ int main(void){
            
             asc[i] = 32;  //sets ASCII value to space
             eN = 32;  //sets ASCII value to space
+            
         }   
-
+        original[i-1] = eN;
+    
     }
 /*----------------------------END of input reading While loop----------------------*/
       
@@ -140,12 +142,13 @@ int main(void){
         
     }
     
+    
     //printf("\n%c\n", array[22]); //array[0] is the most commonly occuring letter, can test if array is working here
  /*------------------------------------------------------------------------*/
 
  /*-----Creation of key for each alphabet by comparing frequency of input text character occurrence with frequency of character occurrence in the english language------------------*/
-    for(i=0; i<=25; i++){
-        if(array[i] >=65 && array[i] <=90){
+    for(i=0; i<=25; i++){ //NEED TO PREVENT REPEATING OF LETTER
+        if(freq[i] != 0 && array[i] >=65 && array[i] <=90){
         
         arr = array[i];
         alph = AlphFreq[i];
@@ -161,65 +164,21 @@ int main(void){
  /*------------------------------------------------------------------------*/
   
 /*--------------Decryption/Encryption of input Based on statistical analysis------------------*/
-    while(!feof(input)){ //loops until no characters are left in the input file
-        fscanf(input,"%c", &c); //Scans file for characters and stores them as a variable c
-         i++; //increments array pointer with every loop and assigns the input read ascii value to it, i.e. asc[0] = "first input character read from file"
-       
-       if(c >= 65 && c <= 90){  //if upper case
-            
-            asc[i] = c;     //assigns array at array point i with value c
-            c = c - 65;     //A = 0
-            e = c + key[i]; //encryption algorithm 
-            if(e >= 26){     //if array pointer value is exceeded
-                e = e - 26;    //starts array pointers over again plus difference between total value (>26) and max pointer value (26)    
-              }
-             eN = eLibU[e]; //selects encrypted value from upper case array
-        }  
-        
-        else if(c >= 97 && c <= 122){  //if lower case 
-            
-            asc[i] = c;     //assigns array at array point i with value c
-            c = c - 32;     //a = 0
-            e = c - 65 + key[i]; //encryption algorithm 
-            if(e >= 26){     //if array pointer value is exceeded
-                e = e - 26;    //starts array pointers over again plus difference between total value (>26) and max pointer value (26)    
-              }
-             eN = eLibU[e]; //selects ascii value from upper case array
-        }   
 
-        /*The following 3 'else if' statements leave common punctuation unmodified*/
-        else if(c == 46){ //if full stop
-            asc[i] = 46;  //sets ASCII value full stop
-            eN = 46;  //sets ASCII value to full stop
-        }
-        
-         else if(c == 44){ //if comma
-            asc[i] = 44;  //sets ASCII value to comma
-            eN = 44;  //sets ASCII value to comma
-        }
-        
-        else if(c == 39){ //if apostrophe 
-            asc[i] = 39;  //sets ASCII value to apostrophe
-            eN = 39;  //sets ASCII value to apostrophe
-        }  
-          else if(c == 58){ //if colon
-            asc[i] = 58;  //sets ASCII value to colon
-            eN = 58;  //sets ASCII value to colon
-        }  
-                       
-        else if(c < 65 || (c >= 91 && c <= 96) || c > 122 ){ //excludes any ASCII value that isn't a letter
-           
-            asc[i] = 32;  //sets ASCII value to space
-            eN = 32;  //sets ASCII value to space
-        }   
-
-        printf("%c %d encrypted: %d %c\n", asc[i], asc[i], eN, eN); 
-        fputc(eN, output); //prints encrypted message to output file
-    }
   
  /*------------------------------------------------------------------------*/
+    for(i=0; i<=10; i++){
+            
+            location = original[i];
+            decrypted[i] = location + key[];
+            
+              
+              
+            printf("\n is %d", location);
         
-  
+    }   
+
+
         
     fclose(input); //closes input file
     fclose(output); //closes output file
