@@ -10,8 +10,10 @@ int main(void){
     int max = 0, maxLoc, loc;
     int decrypt[26] = {0}; // array used to store decrypted letters. Can be compared to eLibU. E.g. if eLibU[1] = B and decryptArray[1] = E, B = E
     int key[26]; //key  
-    int static k;
-    int location[25];
+    int k, arr = 0, alph = 0, location;
+    int AlphFreq[] = {69, 84, 65, 79, 73, 78, 83, 72, 82, 68, 76, 85, 67, 77, 87, 70, 71, 89, 80, 66, 86, 75, 74, 88, 81, 90}; //array with descending order of charcter frequency in Ennglish alphabet
+ 
+    
       
     /*Open message file and output file*/
     FILE *input, *output;        //File points to input and output
@@ -29,7 +31,7 @@ int main(void){
     
    
         
-     /*while loop scans input file for characters, prints them to terminal, 
+     /*----while loop scans input file for characters, prints them to terminal, 
      encrypts them with key value, writes this to an output, and loops until no characters are left in the input file*/   
      while(!feof(input)){ //loops until no characters are left in the input file
         fscanf(input,"%c", &c); //Scans file for characters and stores them as a variable c
@@ -87,13 +89,14 @@ int main(void){
             eN = 32;  //sets ASCII value to space
         }   
 
-        printf("%c %d encrypted: %d %c\n", asc[i], asc[i], eN, eN);
-        
-     
+        printf("%c %d encrypted: %d %c\n", asc[i], asc[i], eN, eN); 
     }
+/*----------------------------END of input reading While loop----------------------*/
       
-   /*------Determines frequency of character occurrence for statistical analysis------*/   
+   /*------Determines frequency of character occurrence from input text for statistical analysis------*/   
+
     for(i=0; i <= 1024; i++){
+      
         count = 1;
         for(j=i+1; j <= 1024 ; j++){
             if(array[i]==array[j]){
@@ -106,16 +109,21 @@ int main(void){
             freq[i] = count;
         }
     }
+
+
+
+
     /*------------------------------------------------------------------------*/
    
-    /*------------------Orders Letter is descending frequency of occurence----------------------------*/
+    /*------------------Orders characters in an array (array[i]) in descending frequency of occurence----------------------------*/
+
     for (i=0; i<=1024; ++i){    
         for (j=i+1; j<=1024; ++j){
             if (freq[i] < freq[j]){
                 int tmp = freq[i];
                 freq[i] = freq[j];
                 freq[j] = tmp;
-       
+                
                 int tmp2 = array[i];
                 array[i] = array[j];
                 array[j] = tmp2;
@@ -123,23 +131,42 @@ int main(void){
         }
     }
 
+
+
     printf ("\nDescending order of letter frequency"); 
     for (i=0; i<=25; i++){
-        if(freq[i] != 0 && array[i] >= 0 && array[i] <= 90){
+        if(freq[i] != 0 && array[i] >= 65 && array[i] <= 90){
             printf ("\n%c occurs %d times", array[i], freq[i]); //array[i] is now ordered in terms of frequency of letter occurence from input text
         }
+        
     }
     
-    //printf("\n%c\n", array[0]); array[0] is the most commonly occuring letter, can test if array is working here
+    //printf("\n%c\n", array[22]); //array[0] is the most commonly occuring letter, can test if array is working here
  /*------------------------------------------------------------------------*/
-      
-      
-      
-/*----------------------------------------------------------------------------------*/    
 
-/*--------------Decryption/Encryption Based on Statistical Analysis------------------*/
-    
+ /*-----Creation of key for each alphabet by comparing frequency of input text character occurrence with frequency of character occurrence in the english language------------------*/
+    for (i=0; i<=25; i++){
+        if(array[i] >=65 && array[i] <=90){
+        
+        arr = array[i];
+        alph = AlphFreq[i];
+        location = arr - 65;
+        
+        key[location] = alph - arr;
+        if(key[location] >= 26){     //if array pointer value is exceeded
+            key[location] = key[location] - 26;    //starts array pointers over again plus difference between total value (>26) and max pointer value (26)    
+        }
+        printf("\n%c is rotated %d", arr, key[location]); //prints key based on statistical analysis
+    }
+}
 
+
+ /*------------------------------------------------------------------------*/
+     
+
+/*--------------Decryption/Encryption of input Based on statistical analysis------------------*/
+  
+ /*------------------------------------------------------------------------*/
         
   
         
