@@ -13,6 +13,7 @@ int main(void){
     int k, arr = 0, alph = 0, location;
     int AlphFreq[] = {69, 84, 65, 79, 73, 78, 83, 72, 82, 68, 76, 85, 67, 77, 87, 70, 71, 89, 80, 66, 86, 75, 74, 88, 81, 90}; //array with descending order of charcter frequency in Ennglish alphabet
     int original[1024];
+     int decryptLoc[1024];
     
       
     /*Open message file and output file*/
@@ -68,6 +69,11 @@ int main(void){
             asc[i] = 46;  //sets ASCII value full stop
             eN = 46;  //sets ASCII value to full stop
         }
+        else if(c == 63){ //if question mark
+            asc[i] = 63;  //sets ASCII value full stop
+            eN = 63;  //sets ASCII value to full stop
+   }
+
         
          else if(c == 44){ //if comma
             asc[i] = 44;  //sets ASCII value to comma
@@ -167,15 +173,40 @@ int main(void){
 
   
  /*------------------------------------------------------------------------*/
-    for(i=0; i<=10; i++){
+    for(i=0; i<=500; i++){
             
-            location = original[i];
-            decrypted[i] = location + key[];
+            location = original[i] - 65;
+            k = key[location];
+            decrypted[i] = original[i] + k;
+            e = decrypted[i];
+            
+           
+            
+             if(e >= 90){     //if array pointer value is exceeded
+                e = e - 65;    //starts array pointers over again plus difference between total value (>26) and max pointer value (26)    
+              }
+              
+              if(original[i] == 32){
+                  e = 32;
+              }
+              if(original[i] == 39){
+                  e = 39;
+              }
+               if(original[i] == 46){
+                  e = 46;
+              }
+                if(original[i] == 63){
+                  e = 63;
+              }
+             
+            eNFinal = e;
             
               
-              
-            printf("\n is %d", location);
-        
+            
+            printf("\n%c (%d) is %c (%d)", original[i], original[i], eNFinal, eNFinal);
+            fputc(eNFinal, output); //prints encrypted message to output file
+   
+
     }   
 
 
