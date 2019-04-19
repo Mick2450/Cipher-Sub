@@ -2,19 +2,19 @@
 #include <string.h>
 
 int main(void){
-    char c, eN, eNFinal; //c is character from message & eN is is the encrypted character
+    char c = 0, eN = 0, eNFinal = 0; //c is character from message & eN is is the encrypted character
     int eLibU[] = {65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90}; //library of encryption values from A to Z
-    int asc[1024]; //ascii array
+    int asc[1024] = {0}; //ascii array
     int i = 0, e = 0, count = 0, j = 0;
-    int freq[1000];
-    char array[1024];
+    int freq[1000] = {0};
+    char array[1024] = {0};
     int max = 0, maxLoc, loc;
-    int decrypted[1024]; // array used to store decrypted message
-    int key[26]; //key  
-    int k, arr = 0, alph = 0, location;
+    int decrypted[1024] = {0}; // array used to store decrypted message
+    int key[26] = {0}; //key  
+    int k = 0, arr = 0, alph = 0, location = 0;
     int AlphFreq[] = {69, 84, 65, 79, 73, 78, 83, 72, 82, 68, 76, 85, 67, 77, 87, 70, 71, 89, 80, 66, 86, 75, 74, 88, 81, 90}; //array with descending order of charcter frequency in Ennglish alphabet
-    char original[1024];
-    int decryptLoc[1024];
+    char original[1024] = {0};
+    int decryptLoc[1024] = {0};
     
       
     /*Open message file and output file*/
