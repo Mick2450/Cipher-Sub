@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 int main(void){
     char c, eN, eNFinal; //c is character from message & eN is is the encrypted character
@@ -6,14 +7,14 @@ int main(void){
     int asc[1024]; //ascii array
     int i = 0, e = 0, count = 0, j = 0;
     int freq[1000];
-    int array[1024];
+    char array[1024];
     int max = 0, maxLoc, loc;
     int decrypted[1024]; // array used to store decrypted message
     int key[26]; //key  
     int k, arr = 0, alph = 0, location;
     int AlphFreq[] = {69, 84, 65, 79, 73, 78, 83, 72, 82, 68, 76, 85, 67, 77, 87, 70, 71, 89, 80, 66, 86, 75, 74, 88, 81, 90}; //array with descending order of charcter frequency in Ennglish alphabet
-    int original[1024];
-     int decryptLoc[1024];
+    char original[1024];
+    int decryptLoc[1024];
     
       
     /*Open message file and output file*/
@@ -141,7 +142,7 @@ int main(void){
 
 
     printf ("\nDescending order of letter frequency"); 
-    for (i=0; i<=25; i++){
+    for (i=0; i<strlen(array); i++){
         if(freq[i] != 0 && array[i] >= 65 && array[i] <= 90){
             printf ("\n%c occurs %d times", array[i], freq[i]); //array[i] is now ordered in terms of frequency of letter occurence from input text
         }
@@ -153,7 +154,7 @@ int main(void){
  /*------------------------------------------------------------------------*/
 
  /*-----Creation of key for each alphabet by comparing frequency of input text character occurrence with frequency of character occurrence in the english language------------------*/
-    for(i=0; i<=25; i++){ //NEED TO PREVENT REPEATING OF LETTER
+    for(i=0; i<strlen(array); i++){ //NEED TO PREVENT REPEATING OF LETTER
         if(freq[i] != 0 && array[i] >=65 && array[i] <=90){
         
         arr = array[i];
@@ -170,20 +171,18 @@ int main(void){
  /*------------------------------------------------------------------------*/
   
 /*--------------Decryption/Encryption of input Based on statistical analysis------------------*/
-
-  
- /*------------------------------------------------------------------------*/
-    for(i=0; i<=500; i++){
+    for(i=0; i<strlen(original); i++){
             
             location = original[i] - 65;
             k = key[location];
             decrypted[i] = original[i] + k;
-            e = decrypted[i];
-            
-           
+            e = decrypted[i];         
             
              if(e >= 90){     //if array pointer value is exceeded
                 e = e - 65;    //starts array pointers over again plus difference between total value (>26) and max pointer value (26)    
+              }
+               if(original[i] == 44){
+                  e = 44;
               }
               
               if(original[i] == 32){
@@ -201,15 +200,12 @@ int main(void){
              
             eNFinal = e;
             
-              
-            
+       
             printf("\n%c (%d) is %c (%d)", original[i], original[i], eNFinal, eNFinal);
             fputc(eNFinal, output); //prints encrypted message to output file
    
-
     }   
-
-
+ /*------------------------------------------------------------------------*/
         
     fclose(input); //closes input file
     fclose(output); //closes output file
